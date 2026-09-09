@@ -185,6 +185,6 @@ for (const c of companies) {
       reminders.push({ level: d !== null && d <= 2 ? "urgent" : "soon", text: `${c.name}: ${e.summary}${d !== null ? ` (до ${iso(e.due)})` : ""}` });
   }
   reminders.sort((a, b) => (a.level === b.level ? 0 : a.level === "urgent" ? -1 : 1));
-  return { today: today.toISOString().slice(0, 10), reminders, fairs, companies, tasks, notes };
-}
+const localToday = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+return { today: localToday, reminders, fairs, companies, tasks, notes };}
                       }
