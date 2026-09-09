@@ -178,8 +178,9 @@ export async function summary() {
     if (!t.done && d !== null && d <= 7)
       reminders.push({ level: d <= 2 ? "urgent" : "soon", text: `Задача: ${t.text}${d < 0 ? " (просрочено)" : ` — через ${d} дн.`}` });
   }
-  for (const c of companies) for (const e of c.events ?? []) {
-    const d = days(e.due);
+for (const c of companies) {
+  if (c.status === "rejected") continue;   // ← добавить эту строку
+  for (const e of c.events ?? []) {    const d = days(e.due);
     if (e.action_required && (d === null || d <= 7))
       reminders.push({ level: d !== null && d <= 2 ? "urgent" : "soon", text: `${c.name}: ${e.summary}${d !== null ? ` (до ${iso(e.due)})` : ""}` });
   }
