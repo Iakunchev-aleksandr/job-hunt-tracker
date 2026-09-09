@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>就活 tracker</title>
+<style>
+  :root{
+    --bg:#f6f5f2; --card:#fff; --ink:#1c1c1a; --sub:#6b6b66; --line:#e6e4df;
+    --accent:#0f6e6e; --accent-soft:#e3f1f1;
+    --urgent:#b42318; --urgent-soft:#fdecea; --soon:#9a6700; --soon-soft:#fff6db;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+    font-size:15px;line-height:1.5}
+  .wrap{max-width:720px;margin:0 auto;padding:14px 14px 40px}
+  header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px}
+  h1{font-size:19px;margin:0;letter-spacing:.01em}
+  .date{font-size:12px;color:var(--sub)}
+  h2{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--sub);margin:18px 0 8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .row{padding:10px 12px;border-top:1px solid var(--line)}
+  .row:first-child{border-top:0}
+  .rem{display:flex;gap:8px;padding:9px 12px;border-top:1px solid var(--line);font-size:14px}
+  .rem:first-child{border-top:0}
+  .rem.urgent{background:var(--urgent-soft)} .rem.soon{background:var(--soon-soft)}
+  .dot{width:8px;height:8px;border-radius:50%;margin-top:7px;flex:none}
+  .urgent .dot{background:var(--urgent)} .soon .dot{background:var(--soon)}
+  .tabs{display:flex;gap:6px;margin-bottom:8px}
+  .tab{font-size:12px;padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--sub);cursor:pointer}
+  .tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .t{font-weight:600}
+  .m{font-size:12.5px;color:var(--sub)}
+  .pill{display:inline-block;font-size:11px;padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:middle}
+  .p-yes{background:var(--accent-soft);color:var(--accent)} .p-no{background:#eee;color:#666}
+  .p-todo{background:#eee;color:#555} .p-waiting{background:var(--soon-soft);color:var(--soon)}
+  .p-interview{background:#e5edff;color:#2b4fb5} .p-offer{background:#e2f6e8;color:#1f7a3a} .p-rejected{background:#f3f3f3;color:#999}
+  .ev{font-size:13px;margin-top:4px;padding-left:10px;border-left:2px solid var(--line)}
+  .ev.act{border-left-color:var(--urgent)}
+  a{color:var(--accent)}
+  .task{display:flex;gap:8px;align-items:flex-start}
+  .task input{margin-top:5px;pointer-events:none}
+  .done{color:#aaa;text-decoration:line-through}
+  details summary{cursor:pointer;color:var(--sub);font-size:13px;padding:8px 12px}
+  .note{white-space:pre-wrap;font-size:13.5px}
+  .empty{padding:12px;color:var(--sub);font-size:13px}
+  .err{color:var(--urgent);padding:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>就活 tracker</h1><div class="date" id="today"></div></header>
+
+  <h2>Напоминания</h2>
+  <div class="card" id="reminders"><div class="empty">Загрузка…</div></div>
+
+  <h2>Ярмарки</h2>
+  <div class="tabs" id="fairTabs">
+    <button class="tab on" data-f="all">все</button>
+    <button class="tab" data-f="unregistered">не зареган</button>
+    <button class="tab" data-f="registered">зареган</button>
+  </div>
+  <div class="card" id="fairs"></div>
+
+  <h2>Компании</h2>
+  <div class="card" id="companies"></div>
+
+  <h2>Задачи</h2>
+  <div class="card" id="tasks"></div>
+
+  <h2>Заметки</h2>
+  <div class="card" id="notes"></div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt = (d) => d ? new Date(d).toLocaleDateString("ru-RU",{day:"numeric",month:"short"}) : "";
+const STATUS = {todo:"не подано",waiting:"ждём",interview:"собес",offer:"内定",rejected:"отказ"};
+let DATA = null, fairFilter = "all";
+
+function renderReminders(list){
+  $("reminders").innerHTML = list.length
+    ? list.map(r => `<div class="rem ${r.level}"><span class="dot"></span><span>${esc(r.text)}</span></div>`).join("")
+    : `<div class="empty">Ничего срочного.</div>`;
+}
+
+function renderFairs(){
+  let list = DATA.fairs;
+  if (fairFilter==="registered") list = list.filter(f=>f.registered);
+  if (fairFilter==="unregistered") list = list.filter(f=>!f.registered);
+  $("fairs").innerHTML = list.length ? list.map(f => `
+    <div class="row">
+      <div class="t">${esc(f.name)}
+        <span class="pill ${f.registered?"p-yes":"p-no"}">${f.registered?"зареган":"не зареган"}</span></div>
+      <div class="m">${f.date?fmt(f.date):"дата уточняется"}${f.format?" · "+(f.format==="online"?"онлайн":"очно"):""}${f.place?" · "+esc(f.place):""}</div>
+      ${f.reg_deadline?`<div class="m">регистрация до ${fmt(f.reg_deadline)}</div>`:""}
+      ${f.conditions?`<div class="m">${esc(f.conditions)}</div>`:""}
+      ${f.notes?`<div class="m"><b>${esc(f.notes)}</b></div>`:""}
+      ${f.reg_url?`<div class="m"><a href="${esc(f.reg_url)}" target="_blank" rel="noreferrer">регистрация / сайт</a></div>`:""}
+    </div>`).join("") : `<div class="empty">Пусто.</div>`;
+}
+
+function companyRow(c){
+  const ev = (c.events||[]).map(e => `
+    <div class="ev ${e.action_required?"act":""}">
+      <span class="m">${fmt(e.date)}${e.source?" · "+esc(e.source):""}${e.due?" · до "+fmt(e.due):""}</span><br>${esc(e.summary)}
+    </div>`).join("");
+  return `<div class="row">
+    <div class="t">${esc(c.name)}<span class="pill p-${c.status}">${STATUS[c.status]||c.status}</span></div>
+    ${c.stage?`<div class="m">${esc(c.stage)}</div>`:""}
+    ${c.notes?`<div class="m">${esc(c.notes)}</div>`:""}
+    ${ev}
+  </div>`;
+}
+
+function renderCompanies(){
+  const act = DATA.companies.filter(c=>c.status!=="rejected");
+  const rej = DATA.companies.filter(c=>c.status==="rejected");
+  $("companies").innerHTML = (act.length ? act.map(companyRow).join("") : `<div class="empty">Нет активных.</div>`)
+    + (rej.length ? `<details><summary>Отказы (${rej.length})</summary>${rej.map(companyRow).join("")}</details>` : "");
+}
+
+function renderTasks(){
+  $("tasks").innerHTML = DATA.tasks.length ? DATA.tasks.map(t => `
+    <div class="row task"><input type="checkbox" ${t.done?"checked":""} tabindex="-1">
+      <div><div class="${t.done?"done":""}">${esc(t.text)}</div>${t.due?`<div class="m">до ${fmt(t.due)}</div>`:""}</div>
+    </div>`).join("") : `<div class="empty">Нет задач.</div>`;
+}
+
+function renderNotes(){
+  $("notes").innerHTML = DATA.notes.length ? DATA.notes.map(n => `
+    <div class="row"><div class="t">${esc(n.key)}</div><div class="note">${esc(n.text)}</div></div>`).join("")
+    : `<div class="empty">Нет заметок.</div>`;
+}
+
+async function load(){
+  try{
+    const r = await fetch("/api/summary",{cache:"no-store"});
+    if(!r.ok) throw new Error(r.status);
+    DATA = await r.json();
+    $("today").textContent = new Date(DATA.today).toLocaleDateString("ru-RU",{weekday:"short",day:"numeric",month:"long"});
+    renderReminders(DATA.reminders); renderFairs(); renderCompanies(); renderTasks(); renderNotes();
+  }catch(e){
+    $("reminders").innerHTML = `<div class="err">Не удалось загрузить данные (${esc(e.message)}). Если сервер на бесплатном Render — подожди ~30 сек и обнови.</div>`;
+  }
+}
+$("fairTabs").addEventListener("click", e => {
+  const b = e.target.closest(".tab"); if(!b) return;
+  fairFilter = b.dataset.f;
+  [...$("fairTabs").children].forEach(x => x.classList.toggle("on", x===b));
+  renderFairs();
+});
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+{
+  "fairs": [
+    {
+      "name": "留学生向け合同説明会（東京ドームシティ）",
+      "date": "2026-09-28",
+      "format": "offline",
+      "place": "東京ドームシティ プリズムホール（文京区後楽1-3-61）11:00–18:00",
+      "reg_url": "https://www.gosetsu.com/tag/3",
+      "conditions": "Ярмарка для 留学生. Проверить, что она для 27卒.",
+      "registered": false
+    },
+    {
+      "name": "JETRO オンライン合同企業説明会 2026秋",
+      "date": null,
+      "format": "online",
+      "place": "онлайн (Zoom-стенды компаний)",
+      "reg_url": "https://www.jetro.go.jp/hrportal/",
+      "conditions": "~90 компаний, нанимающих иностранцев. Обычно в октябре (2025: 20–24 окт). Регистрация открывается за несколько недель — следить на hrportal.",
+      "notes": "ГЛАВНЫЙ ПРИОРИТЕТ.",
+      "registered": false
+    },
+    {
+      "name": "JETRO オンライン合同企業説明会 2027冬",
+      "date": "2027-01-26",
+      "format": "online",
+      "reg_url": "https://www.jetro.go.jp/hrportal/",
+      "conditions": "Зимний раунд, обычно конец января (дата ориентировочная). Ещё до выпуска — в окне.",
+      "registered": false
+    },
+    {
+      "name": "リュウカツ オンライン合同説明会",
+      "date": null,
+      "format": "online",
+      "reg_url": "https://ryugakusei.com/session/",
+      "conditions": "Регулярные онлайн-ярмарки для 留学生. Зарегистрироваться на сайте — пришлют даты.",
+      "registered": false
+    },
+    {
+      "name": "外国人留学生のための就職フォーラム 2027（ASIA Link）",
+      "date": "2027-02-14",
+      "format": "online",
+      "reg_url": "https://www.asialink.jp/",
+      "conditions": "Проводится каждый февраль (дата ориентировочная) и май.",
+      "registered": false
+    }
+  ],
+  "companies": [
+    { "name": "Q'sfix", "aliases": ["キューズフィックス", "株式会社Q'sfix"], "domains": ["qsfix.com"], "status": "waiting", "stage": "一次面接済（7/31）→ 結果待ち", "notes": "担当: 髙倉様. Запрос статуса отправлен. Продукты: 医療AI（Heart-Profile）・動作解析." },
+    { "name": "タマテクノシステム", "aliases": ["タマテクノシステム株式会社", "tamats"], "domains": ["tamats.co.jp"], "status": "waiting", "stage": "書類選考", "notes": "担当: 総務部 山田樹梨様 (yamada-j@tamats.co.jp). 説明会 8/10. Сети/инфраструктура (NEC/NTT). Обещали результат ~1 неделя." },
+    { "name": "ゼウス・エンタープライズ", "aliases": ["株式会社ゼウス・エンタープライズ"], "domains": ["zeus-enterprise.co.jp"], "status": "rejected", "stage": "一次面接（9/4）→ 不採用", "notes": "終身雇用, сети/Linux, обучение с нуля." },
+    { "name": "三和電子", "aliases": ["三和電子株式会社"], "domains": ["jp.sanwadenshi.com", "sanwadenshi.com"], "status": "rejected", "stage": "ES+履歴書+SPI → 不採用", "notes": "担当: 渡辺久美子様. SIer, 無線・IoT." },
+    { "name": "マルチプル", "aliases": ["株式会社マルチプル", "MULTIPLE"], "domains": ["multiple-shop.com"], "status": "rejected", "stage": "書類選考 → 不採用", "notes": "担当: 加瀬隼人様. Розница/EC, 自社Web開発." },
+    { "name": "アクシス・クリエイト", "aliases": ["株式会社アクシス・クリエイト"], "domains": ["bcc-net.co.jp"], "status": "rejected", "stage": "書類選考 → 不採用", "notes": "Набор через агентство BCC株式会社. 運用・保守・監視・テクニカルサポート." },
+    { "name": "NextConnect", "aliases": ["NextConnect株式会社"], "domains": [], "status": "rejected", "stage": "書類選考 → 不採用", "notes": "開発・運用・ネットワーク構築【363】." },
+    { "name": "アヤベックス", "aliases": ["アヤベックス株式会社"], "domains": ["arwrk.net"], "status": "rejected", "stage": "書類選考 → 不採用", "notes": "Въездной туризм (не IT). Виза: компания подтвердила 資格変更手続き возможна." },
+    { "name": "日総工産", "aliases": ["日総工産株式会社", "NISSO"], "domains": ["nisso.co.jp"], "status": "todo", "stage": "エントリー前（就職指導課 斉藤先生と面談が必要）", "notes": "Условия: TOEIC650+, Java, опыт, 全国転勤. Сильное обучение (IT人材育成プロジェクト). 志望動機 готов." },
+    { "name": "テクノプロ・IT", "aliases": ["テクノプロ・IT社", "TechnoPro"], "domains": ["technopro.com"], "status": "todo", "stage": "未エントリー", "notes": "Крупнейший 技術者派遣, своя школа (Winスクール). 志望動機 готов." },
+    { "name": "Nextbeat", "aliases": ["株式会社ネクストビート", "ネクストビート"], "domains": ["nextbeat.co.jp"], "status": "todo", "stage": "未エントリー", "notes": "自社プロダクト (保育士バンク！), 永遠ベンチャー, AI駆動開発. 志望動機 готов." },
+    { "name": "エム・ケイ・ソフトサービス", "aliases": ["(株)エム・ケイ・ソフトサービス"], "domains": [], "status": "todo", "stage": "説明会参加済", "notes": "独立系SIer (1980), じっくり育成. Ответ на 説明会-вопрос готов." }
+  ],
+  "events": [
+    { "company": "Q'sfix", "source": "direct", "date": "2026-07-31", "summary": "一次面接（HR 髙倉様）", "action_required": false },
+    { "company": "Q'sfix", "source": "direct", "date": "2026-08-27", "summary": "Отправлен запрос о результатах собеседования 髙倉様", "action_required": false },
+    { "company": "タマテクノシステム", "source": "direct", "date": "2026-09-02", "summary": "山田様: начинаем 書類選考, результат ~в течение 1 недели", "action_required": true, "due": "2026-09-12" },
+    { "company": "ゼウス・エンタープライズ", "source": "mynavi", "date": "2026-09-04", "summary": "一次面接 в 日比谷本社 (松鶴様) → позже отказ", "action_required": false }
+  ],
+  "tasks": [
+    { "text": "Вписать в резюме「日本語能力試験N2 受験予定（2026年12月）」", "due": "2026-09-12" },
+    { "text": "就職課: 専門士? сроки смены визы? 推薦? список компаний, бравших иностранцев", "due": "2026-09-16" },
+    { "text": "Записаться в 東京外国人雇用サービスセンター", "due": "2026-09-16" },
+    { "text": "Проверить ярмарку 28.09 (東京ドームシティ) — для 27卒?", "due": "2026-09-20" },
+    { "text": "Зарегистрироваться на リュウカツ", "due": "2026-09-16" },
+    { "text": "JETRO 2026秋: следить за открытием регистрации на hrportal", "due": "2026-10-01" },
+    { "text": "JLPT N2 試験（зарегистрирован）", "due": "2026-12-06" }
+  ],
+  "notes": [
+    { "key": "visa", "text": "留学 до 2027-05-23. Выпуск 2027-03. Главный путь: 内定 → 技術・人文知識・国際業務 (подача с ~1 дек, старт апрель 2027). 特例期間: подал до конца визы → ждать решение до 2 мес. 特定活動(就職活動) закрыт (нужен N2+N1). Запасные: CoE (выезд/въезд с рабочей визой) или ещё один курс (продлевает 留学). Проверить 専門士." },
+    { "key": "strategy", "text": "Не холодная подача в SES. Каналы: 推薦 от 就職課, 東京外国人雇用サービスセンター, 留学生向け合同説明会 (JETRO/リュウカツ/ASIA Link), 自社開発 и компании с 留学生採用実績あり. N2 в декабре снимает фильтр на документах." },
+    { "key": "profile", "text": "ヤクンチェヴ・アレクサンドル / IAKUNCHEV ALEKSANDR. 日本国際工科専門学校 ビジネススペシャリスト科 ITマネジメントコース, 卒業 2027-03. Java/C++/C#, SQL/PostgreSQL, HTML/CSS/JS, 1C. JLPT N3 (2024-12), TOEIC 950 (2026-08). Опыт: VazaGames (C++ game dev, AI logic), Alexrovich (1C), AllForDJ (1C intern)." }
+  ]
+}
