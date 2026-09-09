@@ -187,3 +187,4 @@ for (const c of companies) {
   reminders.sort((a, b) => (a.level === b.level ? 0 : a.level === "urgent" ? -1 : 1));
   return { today: today.toISOString().slice(0, 10), reminders, fairs, companies, tasks, notes };
 }
+                      }
